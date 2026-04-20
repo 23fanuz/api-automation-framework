@@ -1,7 +1,8 @@
 from playwright.sync_api import APIRequestContext
 
+
 class ProductAPI:
-    def __int__(self, request_context: APIRequestContext):
+    def __init__(self, request_context: APIRequestContext):
         self.request = request_context
         self.base_url = "https://fakestoreapi.com"
 
