@@ -1,5 +1,3 @@
-import pytest
-from conftest import api_context
 from services.product_api import ProductAPI
 
 
