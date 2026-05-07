@@ -9,6 +9,13 @@ def test_get_all_products(api_context):
     with allure.step("Send GET request to /products"):
         response = product_api.get_all_products()
 
+    with allure.step("Attach raw response"):
+        allure.attach(
+            str(response.json()),
+            name="Response JSON",
+            attachment_type=allure.attachment_type.JSON
+        )
+
     with allure.step("Verify status code is 200"):
         assert response.status == 200
 
