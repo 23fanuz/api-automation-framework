@@ -33,9 +33,18 @@ def test_get_all_users(api_context):
 
 
 def test_create_user(api_context):
+    """
+    Validates user creation endpoint.
+
+    This test:
+    - Generates dynamic user data
+    - Sends POST request
+    - Validates API response
+    """
     user_api = UserAPI(api_context)
 
     with allure.step("Generate dynamic user payload"):
+        # Create fake user using Faker
         payload = generate_user_payload()
 
     with allure.step("Send POST request to create user"):
@@ -52,5 +61,6 @@ def test_create_user(api_context):
         assert response.status == 201
 
     with allure.step("Validate response contains ID only"):
+        # FakeStoreAPI only returns ID
         created_user = UserResponse(**response.json())
         assert created_user.id is not None
