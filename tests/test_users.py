@@ -4,6 +4,7 @@ from services.user_api import UserAPI
 from models.user_model import User
 from models.user_model import UserResponse
 from utils.data_generator import generate_user_payload
+from utils.validation import validate_response
 
 
 def test_get_all_users(api_context):
@@ -62,5 +63,5 @@ def test_create_user(api_context):
 
     with allure.step("Validate response contains ID only"):
         # FakeStoreAPI only returns ID
-        created_user = UserResponse(**response.json())
+        created_user = validate_response(UserResponse, response)
         assert created_user.id is not None
