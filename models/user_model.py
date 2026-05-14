@@ -27,3 +27,7 @@ class User(BaseModel):
     name: Name
     address: Address
     phone: str
+
+
+class UserResponse(BaseModel):
+    id: int

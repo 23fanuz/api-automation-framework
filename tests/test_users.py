@@ -2,6 +2,8 @@ import allure
 
 from services.user_api import UserAPI
 from models.user_model import User
+from models.user_model import UserResponse
+from utils.data_generator import generate_user_payload
 
 
 def test_get_all_users(api_context):
@@ -29,3 +31,26 @@ def test_get_all_users(api_context):
     with allure.step("Verify at least one user exists"):
         assert len(validated_users) > 0
 
+
+def test_create_user(api_context):
+    user_api = UserAPI(api_context)
+
+    with allure.step("Generate dynamic user payload"):
+        payload = generate_user_payload()
+
+    with allure.step("Send POST request to create user"):
+        response = user_api.create_user(payload)
+
+    with allure.step("Attach request payload"):
+        allure.attach(
+            str(payload),
+            name="Request Payload",
+            attachment_type=allure.attachment_type.JSON
+        )
+
+    with allure.step("Verify status code is 201"):
+        assert response.status == 201
+
+    with allure.step("Validate response contains ID only"):
+        created_user = UserResponse(**response.json())
+        assert created_user.id is not None

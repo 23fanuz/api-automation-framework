@@ -8,3 +8,6 @@ class UserAPI(BaseAPIClient):
 
     def get_all_users(self):
         return self.get("/users")
+
+    def create_user(self, payload):
+        return self.post("/users", data=payload)
