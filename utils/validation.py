@@ -1,28 +1,29 @@
-from pydantic import BaseModel
-from typing import Type
+from utils.schema_registry import SCHEMA_REGISTRY
 
 
-def validate_response(model: Type[BaseModel], response):
+def  validate_response(method: str, endpoint: str, response):
     """
-    Central validation layer for all API tests.
+    Automatically validates API responses based on endpoint mappings + HTTP method
 
-    This function:
-    - parses JSON response
-    - validates against a Pydantic model
-    - returns an object
-
+    Creates a centralized contract validation system.
     """
+
     try:
         response_json = response.json()
 
-        # Validate and return typed obj
-        validated_object = model(**response_json)
+        # Find expected schema
+        model = SCHEMA_REGISTRY.get((method, endpoint))
 
-        return validated_object
+        if not model:
+            raise ValueError(f"No schema registered for {method} {endpoint}")
+
+        if isinstance(response_json, list):
+            return [model(**item) for item in response_json]
+
+        return model(**response_json)
 
     except Exception as e:
         raise AssertionError(
-            f"Response validation failed for {model.__name__}: {str(e)}\n"
+            f"Validation failed for endpoint {endpoint}: {str(e)}\n"
             f"Response JSON: {response_json}"
         )
-

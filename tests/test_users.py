@@ -27,7 +27,7 @@ def test_get_all_users(api_context):
         users = response.json()
 
     with allure.step("Validate user schema using Pydantic"):
-        validated_users = [User(**user) for user in users]
+        validated_users = validate_response("GET", "/users", response)
 
     with allure.step("Verify at least one user exists"):
         assert len(validated_users) > 0
@@ -63,5 +63,5 @@ def test_create_user(api_context):
 
     with allure.step("Validate response contains ID only"):
         # FakeStoreAPI only returns ID
-        created_user = validate_response(UserResponse, response)
+        created_user = validate_response("POST", "/users", response)
         assert created_user.id is not None
