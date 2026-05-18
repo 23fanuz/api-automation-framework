@@ -1,4 +1,7 @@
 from utils.logger import get_logger
+from utils.reporting import attach_request_response
+
+
 class BaseAPIClient:
     def __init__(self, api_context, base_url: str):
         self.api_context = api_context
@@ -6,21 +9,30 @@ class BaseAPIClient:
         self.logger = get_logger(self.__class__.__name__)
 
     def get(self, endpoint: str):
-        url = f"{self.base_url}{endpoint}"
-        self.logger.info(f"GET{url}")
+        response = self.api_context.get(f"{self.base_url}{endpoint}")
 
-        response = self.api_context.get(url)
-        self.logger.info(f"Response status: {response.status}")
+        attach_request_response(
+            method="GET",
+            endpoint=endpoint,
+            payload=None,
+            response=response
+        )
+
         return response
 
-
     def post(self, endpoint: str, data=None):
-        url = f"{self.base_url}{endpoint}"
-        self.logger.info(f"POST {url}")
+        response = self.api_context.post(
+            f"{self.base_url}{endpoint}",
+            data=data
+        )
 
-        response = self.api_context.post(url, data=data)
+        attach_request_response(
+            method="POST",
+            endpoint=endpoint,
+            payload=data,
+            response=response
+        )
 
-        self.logger.info(f"Response status: {response.status}")
         return response
 
     def delete(self, endpoint: str):
