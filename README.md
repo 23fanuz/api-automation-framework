@@ -4,7 +4,7 @@ A scalable API automation framework built with Python, Playwright, Pytest, and P
 
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
 ![Pytest](https://img.shields.io/badge/tested%20with-pytest-yellow)
-![CI](https://github.com/<23fanuz>/api-automation-framework/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/23fanuz/api-automation-framework/actions/workflows/ci.yml/badge.svg)
 
 ---
 
