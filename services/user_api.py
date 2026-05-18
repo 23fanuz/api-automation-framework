@@ -1,4 +1,5 @@
 from services.base_api_client import BaseAPIClient
+from config.settings import Settings
 
 
 class UserAPI(BaseAPIClient):
@@ -11,7 +12,7 @@ class UserAPI(BaseAPIClient):
 
     # Initialize base client with shared API context and base URL
     def __init__(self, api_context):
-        super().__init__(api_context, "https://fakestoreapi.com")
+        super().__init__(api_context, Settings.BASE_URL)
 
     def get_all_users(self):
         """
