@@ -89,7 +89,7 @@ This project uses **GitHub Actions**. On every push to `main`:
 3. Allure results are generated
 4. Artifacts are uploaded for review
 
-See [`.github/workflows/api-tests.yml`](.github/workflows/ci.yml) for the pipeline definition.
+See [`.github/workflows/api-tests.yml`](.github/workflows/api-tests.yml) for the pipeline definition.
 
 ---
 
