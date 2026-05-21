@@ -1,5 +1,7 @@
 from services.base_api_client import BaseAPIClient
 from config.settings import Settings
+from models.user_model import User
+from models.user_model import UserResponse
 
 
 class UserAPI(BaseAPIClient):
@@ -19,7 +21,7 @@ class UserAPI(BaseAPIClient):
         GET /users
         :returns list of all users
         """
-        return self.get("/users")
+        return self.get("/users", response_model=User)
 
     def create_user(self, payload):
         """
@@ -27,4 +29,8 @@ class UserAPI(BaseAPIClient):
         Creates a new user using the provided payload
         Note: FakeStoreAPI only returns ID, not a full user object.
         """
-        return self.post("/users", data=payload)
+        return self.post(
+            "/users",
+            data=payload,
+            response_model=UserResponse,
+            expected_status=201)

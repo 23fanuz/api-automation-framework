@@ -1,26 +1,17 @@
 import allure
 
 from services.user_api import UserAPI
-from models.user_model import User
-from models.user_model import UserResponse
 from utils.data_generator import generate_user_payload
-from utils.validation import validate_response
 
 
 def test_get_all_users(api_context):
     user_api = UserAPI(api_context)
 
     with allure.step("Send GET request to /users"):
-        response = user_api.get_all_users()
-
-    with allure.step("Verify status code is 200"):
-        assert response.status == 200
-
-    with allure.step("Validate user schema using Pydantic"):
-        validated_users = validate_response("GET", "/users", response)
+        users = user_api.get_all_users()
 
     with allure.step("Verify at least one user exists"):
-        assert len(validated_users) > 0
+        assert len(users) > 0
 
 
 def test_create_user(api_context):
